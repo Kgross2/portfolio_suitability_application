@@ -1,5 +1,7 @@
 from fpdf import FPDF
 from PIL import Image, ImageDraw, ImageFont
+import os
+
 
 def create_info_img(full_name, phone_number, email_address, annual_income, income_stability, annual_expenses, investment_amount, investment_length, risk_level, investment_strategy):
     # name of the file to save
@@ -77,3 +79,32 @@ def create_pdf(full_name):
     #pdf.write(4, f"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc,")
     pdf.output('portfolio_suitability_report.pdf', 'F')
     return
+
+def intro_message():
+    print("    ╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬")
+    print("    ╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬")
+    print("    ╬╬╬╬╬╬╬╬╙╙╙╙╙╙╙╙╬╬╬╬╬╬╬╬╬╜╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╝▀╙╙╙╙▀╣╬╬╩╬╬▓╙▀▀▀▀▀╙▓╬╬╬╬╙╙╙╙╙║╬╬╬╬╬╬╬")
+    print("    ╬╬╬╬╬╬╬╬╬╬▓   ╬╬╬╬╬╬╬╬╬╬Γ ╙╬╬╬╬╬╬╬╬╬╬╬▀  ╔▓╬╬╬╬╬▓,  ╬╬╬╬╬   ╬╬╬╬╬╬▓╜ é╣╬╬╬╬╬╬╬╬╬")
+    print("    ╬╬╬╬╬╬╬╬╬╬▌   ╬╬╬╬╬╬╬╬╬▌   ╚╬╬╬╬╬╬╬╬▓   ▓╬╬╬╬╬╬╬╬╬L ╬╬╬╬╬   ╬╬╬╬▓╜,#╣╬╬╬╬╬╬╬╬╬╬╬")
+    print("    ╬╬╬╬╬╬╬╬╬╬▌   ╬╬╬╬╬╬╬╬▓ ▓   ╟╬╬╬╬╬╬╬   @╬╬╬╬╬╬╬╬╬╬╬,╬╬╬╬╬   ╬╬╝`╒▓╬╬╬╬╬╬╬╬╬╬╬╬╬╬")
+    print("    ╬╬╬╬╬╬╬╬╬╬▌   ╬╬╬╬╬╬╬╬ å╬▓   ▓╬╬╬╬╬Γ   ╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬   ▀  ▓╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬")
+    print("    ╬╬╬╬╬╬╬╬╬╬▌   ╬╬╬╬╬╬╬Γ╒╬╬╬▌   ╬╬╬╬╬Γ   ╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬   ╦   ╙╣╬╬╬╬╬╬╬╬╬╬╬╬╬╬")
+    print("    ╬╬╬╬╬╬╬╬╬╬▌   ╬╬╬╬╬╬▌ ╝╝╝╝╝-  ╘╬╬╬╬▌   ╣╬╬╬╬╬╬╬╬╬╬╬╬▓╬╬╬╬   ╬▓µ   ╚╬╬╬╬╬╬╬╬╬╬╬╬╬")
+    print("    ╬╬╬╬╬╬╬╬╬╬▌   ╬╬╬╬╬▓ ▓▓▓▓▓▓▓   ╚╬╬╬╬µ  ╘╬╬╬╬╬╬╬╬╬╬╬Γ@╬╬╬╬   ╬╬╬▓┐   ╚╬╬╬╬╬╬╬╬╬╬╬")
+    print("    ╬╬╬╬╬╬╬╬╬╬▌   ╬╬╬╬╬ ║╬╬╬╬╬╬╬▌   ╟╬╬╬╬╗  ╙╣╬╬╬╬╬╬╬╬▀ ║╬╬╬╬   ╬╬╬╬╬▓,   ╫╬╬╬╬╬╬╬╬╬")
+    print("    ╬╬╬╬╬╬╬╣╣╬▌  ▐╬╬╣▓` ╣╣╬╬╬╬╝╝╝─   ╝╝╣╬╬╬▌, ╙╝╣╣╣╝╜ ╔ ║╬╬╣▓   ╣╣╣╬╬╬╣▌   `╝╣╣╬╬╬╬╬")
+    print("    ╬╬╬╬╬╬   ║▌  ▓╬▓▓▓▓▓▓▓▓╬╬╬▓▓▓▓▓▓▓▓▓▓╬╬╬╬╬╬╬▓▓▓▓▓╬╬╬▓▓╬▓▓▓▓▓▓▓▓▓╬╬╬▓▓▓▓▓▓▓▓▓╬╬╬╬╬")
+    print("    ╬╬╬╬╬╬╗,,╠╓Φ╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬")
+    print("    ╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬")
+    print("    ╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬")
+    print("Hello.  Welcome to the JACK Financial Portfolio Suitability Application.  This application will ask you a series of questions and then create a portfolio plan for you.  Upon completion, one of our brokers will reach out to you to schedule a time to review the recommendations.  Let's get started by getting to know you better.")
+
+def exit_message(full_name):
+    print(f"Thank you {full_name} for using our service.  Your information has been processed and our broker team will be in touch with you soon." )
+
+
+def clear_console():
+    command = 'clear'
+    if os.name in ('nt', 'dos'):  # If Machine is running on Windows, use cls
+        command = 'cls'
+    os.system(command)

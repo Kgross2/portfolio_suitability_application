@@ -3,7 +3,8 @@ from dotenv import load_dotenv
 import alpaca_trade_api as tradeapi
 import os
 from MCForecastTools import MCSimulation
-
+from datetime import date, datetime
+from dateutil.relativedelta import relativedelta
 
 # Load env
 load_dotenv()
@@ -15,23 +16,16 @@ alpaca = tradeapi.REST(
     api_version="v2")
 
 def get_benchmark_data(alpaca):
-    # Determine info for SPY, QQQ, IEF, and client selections
-    # Use Alpaca to pull last 3 years data for SPY, QQQ, IEF, and Possible Client Selections
-    # Set the ticker symbols
-    tickers = ["QQQ","SPY", "IEF", "DIA", "LQD", "HYG", "IAGG", "EMHY", "IJH", "IJR", "IXUS", "IEMG"]
-    # Set timeframe to '1D'
+    tickers = ["QQQ","SPY", "IEF", "DIA"]
+    today = pd.Timestamp(date.today(), tz="America/New_York").isoformat()
+    three_yrs_ago=pd.Timestamp(datetime.now() - relativedelta(years=3),tz="America/New_York").isoformat()
     timeframe = "1D"
-    # Set start and end datetimes of 3 years.
-    start_date = pd.Timestamp("2019-02-09", tz="America/New_York").isoformat()
-    end_date = pd.Timestamp("2022-02-9", tz="America/New_York").isoformat()
-    # Set number of rows to 1000 to retrieve the maximum amount of rows
-    limit_rows = 1000
-    # Get 3 year's worth of historical data for tickers
+    limit_rows=1000
     prices_df_benchmark = alpaca.get_barset(
       tickers,
       timeframe,
-      start=start_date,
-      end=end_date,
+      start=three_yrs_ago,
+      end=today,
       limit=limit_rows
     ).df
 
@@ -42,22 +36,36 @@ def get_benchmark_data(alpaca):
     closing_prices_benchmark_df["SPY"] = prices_df_benchmark["SPY"]["close"]
     closing_prices_benchmark_df["IEF"] = prices_df_benchmark["IEF"]["close"]
     closing_prices_benchmark_df["DIA"] = prices_df_benchmark["DIA"]["close"]
-    closing_prices_benchmark_df["LQD"] = prices_df_benchmark["LQD"]["close"]
-    closing_prices_benchmark_df["HYG"] = prices_df_benchmark["HYG"]["close"]
-    closing_prices_benchmark_df["IAGG"] = prices_df_benchmark["IAGG"]["close"]
-    closing_prices_benchmark_df["EMHY"] = prices_df_benchmark["EMHY"]["close"]
-    closing_prices_benchmark_df["IJH"] = prices_df_benchmark["IJH"]["close"]
-    closing_prices_benchmark_df["IJR"] = prices_df_benchmark["IJR"]["close"]
-    closing_prices_benchmark_df["IXUS"] = prices_df_benchmark["IXUS"]["close"]
-    closing_prices_benchmark_df["IEMG"] = prices_df_benchmark["IEMG"]["close"]
 
     daily_returns_benchmark_df = closing_prices_benchmark_df.pct_change().dropna()
+    cumulative_returns_benchmark_df = (1+daily_returns_benchmark_df).cumprod()-1
+    return daily_returns_benchmark_df, cumulative_returns_benchmark_df, closing_prices_benchmark_df 
 
-    cumulative_returns_benchmark = (1+daily_returns_benchmark_df).cumprod()-1
+def get_client_portfolio_data(alpaca, tickers):
+    today = pd.Timestamp(date.today(), tz="America/New_York").isoformat()
+    three_yrs_ago=pd.Timestamp(datetime.now() - relativedelta(years=3),tz="America/New_York").isoformat()
+    timeframe = "1D"
+    limit_rows=1000
+    prices_df_client_portfolio = alpaca.get_barset(
+      tickers,
+      timeframe,
+      start=three_yrs_ago,
+      end=today,
+      limit=limit_rows
+    ).df
 
-    return daily_returns_benchmark_df, cumulative_returns_benchmark, closing_prices_benchmark_df 
+    #  Create an empty `closing_prices_df` DataFrame using Pandas
+    closing_prices_client_portfolio_df = pd.DataFrame()
+    # Populate the `closing_prices_df` DataFrame by accessing the `close` column from the `prices_df` DataFrame for both KO and TSLA .
+    for ticker in tickers:
+      closing_prices_client_portfolio_df[ticker] = prices_df_client_portfolio[ticker]["close"]
+    
+    daily_returns_client_portfolio_df = closing_prices_client_portfolio_df.pct_change().dropna()
+    cumulative_returns_client_portfolio_df = (1+daily_returns_client_portfolio_df).cumprod()-1
+    return daily_returns_client_portfolio_df, cumulative_returns_client_portfolio_df, closing_prices_client_portfolio_df 
 
-def get_MC_simulation(closing_prices_benchmark_df, weight):
+def get_MC_simulation_benchmark(closing_prices_benchmark_df):
+    weight = [0,0,0,1]
     MC_fiveyear = MCSimulation(
       portfolio_data = closing_prices_benchmark_df,
       weights = weight,
@@ -65,12 +73,28 @@ def get_MC_simulation(closing_prices_benchmark_df, weight):
       num_trading_days = 252*5
     )
     MC_cum = MC_fiveyear.calc_cumulative_return()
-
     MC_cum_mean = MC_cum.mean(axis=1)
 
-    # Plot simulation outcomes
-    MC_sim_line_plot = MC_fiveyear.plot_simulation()
-    # Save the plot for future use
-    MC_sim_line_plot.get_figure().savefig("img/mc.png", bbox_inches="tight")
+    # # Plot simulation outcomes
+    # MC_sim_line_plot = MC_fiveyear.plot_simulation()
+    # # Save the plot for future use
+    # MC_sim_line_plot.get_figure().savefig("img/mc.png", bbox_inches="tight")
 
     return MC_cum, MC_cum_mean
+
+def get_tickers(port_profile):
+    tickers = []
+
+    if port_profile == "Fixed Income":
+        tickers = ["AGG", "VCIT", "HYG", "BNDX"]
+    elif port_profile == "Profile 1":
+        tickers = ["AGG", "VCIT", "HYG", "BNOX", "VTV", "VXUS"]
+    elif port_profile == "Profile 2":
+        tickers = ["AGG", "VCIT", "HYG", "BNOX", "EMB", "VTV", "IJH", "VXUS"]
+    elif port_profile == "Profile 3":
+        tickers = ["AGG", "VCIT", "HYG", "BNDX", "EMB", "VTV", "IJH", "VB", "VXUS", "VWO"]
+    elif port_profile == "Profile 4":
+        tickers = ["AGG", "VCIT", "HYG", "BNDX", "EMB", "VTV", "IJH", "VB", "VXUS", "VWO"]
+    elif port_profile == "Profile 5":
+        tickers = ["VTV", "IJH", "VB", "VXUS", "VWO"]
+    return tickers
