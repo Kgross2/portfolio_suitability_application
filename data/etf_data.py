@@ -29,17 +29,19 @@ def get_benchmark_data(alpaca):
       limit=limit_rows
     ).df
 
-    #  Create an empty `closing_prices_df` DataFrame using Pandas
-    closing_prices_benchmark_df = pd.DataFrame()
-    # Populate the `closing_prices_df` DataFrame by accessing the `close` column from the `prices_df` DataFrame for both KO and TSLA .
-    closing_prices_benchmark_df["QQQ"] = prices_df_benchmark["QQQ"]["close"]
-    closing_prices_benchmark_df["SPY"] = prices_df_benchmark["SPY"]["close"]
-    closing_prices_benchmark_df["IEF"] = prices_df_benchmark["IEF"]["close"]
-    closing_prices_benchmark_df["DIA"] = prices_df_benchmark["DIA"]["close"]
 
-    daily_returns_benchmark_df = closing_prices_benchmark_df.pct_change().dropna()
-    cumulative_returns_benchmark_df = (1+daily_returns_benchmark_df).cumprod()-1
-    return daily_returns_benchmark_df, cumulative_returns_benchmark_df, closing_prices_benchmark_df 
+    # #  Create an empty `closing_prices_df` DataFrame using Pandas
+    # closing_prices_benchmark_df = pd.DataFrame()
+    # # Populate the `closing_prices_df` DataFrame by accessing the `close` column from the `prices_df` DataFrame for both KO and TSLA .
+    # closing_prices_benchmark_df["QQQ"] = prices_df_benchmark["QQQ"]["close"]
+    # closing_prices_benchmark_df["SPY"] = prices_df_benchmark["SPY"]["close"]
+    # closing_prices_benchmark_df["IEF"] = prices_df_benchmark["IEF"]["close"]
+    # closing_prices_benchmark_df["DIA"] = prices_df_benchmark["DIA"]["close"]
+
+    # daily_returns_benchmark_df = closing_prices_benchmark_df.pct_change().dropna()
+    # cumulative_returns_benchmark_df = (1+daily_returns_benchmark_df).cumprod()-1
+
+    return prices_df_benchmark #, closing_prices_benchmark_df, cumulative_returns_benchmark_df
 
 def get_client_portfolio_data(alpaca, tickers):
     today = pd.Timestamp(date.today(), tz="America/New_York").isoformat()
@@ -83,9 +85,9 @@ def get_tickers(port_profile):
     if port_profile == "Fixed Income":
         tickers = ["AGG", "VCIT", "HYG", "BNDX"]
     elif port_profile == "Profile 1":
-        tickers = ["AGG", "VCIT", "HYG", "BNOX", "VTV", "VXUS"]
+        tickers = ["AGG", "VCIT", "HYG", "BNDX", "VTV", "VXUS"]
     elif port_profile == "Profile 2":
-        tickers = ["AGG", "VCIT", "HYG", "BNOX", "EMB", "VTV", "IJH", "VXUS"]
+        tickers = ["AGG", "VCIT", "HYG", "BNDX", "EMB", "VTV", "IJH", "VXUS"]
     elif port_profile == "Profile 3":
         tickers = ["AGG", "VCIT", "HYG", "BNDX", "EMB", "VTV", "IJH", "VB", "VXUS", "VWO"]
     elif port_profile == "Profile 4":
@@ -93,3 +95,18 @@ def get_tickers(port_profile):
     elif port_profile == "Profile 5":
         tickers = ["VTV", "IJH", "VB", "VXUS", "VWO"]
     return tickers
+
+def get_client_data(alpaca, tickers):
+    tickers = tickers
+    today = pd.Timestamp(date.today(), tz="America/New_York").isoformat()
+    three_yrs_ago=pd.Timestamp(datetime.now() - relativedelta(years=3),tz="America/New_York").isoformat()
+    timeframe = "1D"
+    limit_rows=1000
+    prices_df_client = alpaca.get_barset(
+      tickers,
+      timeframe,
+      start=three_yrs_ago,
+      end=today,
+      limit=limit_rows
+    ).df
+    return prices_df_client
