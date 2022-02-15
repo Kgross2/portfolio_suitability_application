@@ -2,7 +2,7 @@ import pandas as pd
 from dotenv import load_dotenv
 import alpaca_trade_api as tradeapi
 import os
-from MCForecastTools import MCSimulation
+from data.MCForecastTools import MCSimulation
 from datetime import date, datetime
 from dateutil.relativedelta import relativedelta
 
@@ -74,11 +74,6 @@ def get_MC_simulation_benchmark(closing_prices_benchmark_df):
     )
     MC_cum = MC_fiveyear.calc_cumulative_return()
     MC_cum_mean = MC_cum.mean(axis=1)
-
-    # # Plot simulation outcomes
-    # MC_sim_line_plot = MC_fiveyear.plot_simulation()
-    # # Save the plot for future use
-    # MC_sim_line_plot.get_figure().savefig("img/mc.png", bbox_inches="tight")
 
     return MC_cum, MC_cum_mean
 

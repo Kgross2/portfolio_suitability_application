@@ -2,11 +2,13 @@ from fpdf import FPDF
 from PIL import Image, ImageDraw, ImageFont
 import os
 
+from numpy import cdouble
+
 
 def create_info_img(full_name, phone_number, email_address, annual_income, income_stability, annual_expenses, investment_amount, investment_length, risk_level, investment_strategy):
     # name of the file to save
-    filename = "clientdata.png"
-    fnt = ImageFont.truetype('img/Arial.ttf', 12)
+    filename = "./img/clientdata.png"
+    fnt = ImageFont.truetype('../img/Arial.ttf', 12)
     # create new image
     image = Image.new(mode = "RGB", size = (300,200), color = (39,70,132))
     draw = ImageDraw.Draw(image)
@@ -41,7 +43,7 @@ def create_pdf(full_name):
     # page 1
     pdf.add_page()
     pdf.set_font('Arial', '', 21)
-    pdf.image("img/letterhead1.png", 0, 0, WIDTH)
+    pdf.image("./img/letterhead1.png", 0, 0, WIDTH)
     pdf.ln(10)
     pdf.set_left_margin(100)
     pdf.set_text_color(255, 255, 255)
@@ -58,7 +60,7 @@ def create_pdf(full_name):
     pdf.set_font('Arial', '', 12)
     pdf.ln(22)
     pdf.multi_cell(WIDTH/2-10,5, "In the pages that follow, you will find your Risk Assessment Score, your Investment Horizon Score, and your Investment Strategy.  This report has been created using cutting edge analysis to provide you with the best investment alternatives based upon your criteria.  If any of the information in the chart to the right is incorrect, please notify your account representative as this report is created using this financial and investment data.", border = 0)
-    pdf.image("clientdata.png", x = 110, y = 120, w = WIDTH/2-10)
+    pdf.image("./img/clientdata.png", x = 110, y = 120, w = WIDTH/2-10)
     pdf.ln(18)
     pdf.set_left_margin(WIDTH/2+5)
     pdf.multi_cell(WIDTH/2-10,5, "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi.", border = 0)
@@ -67,7 +69,7 @@ def create_pdf(full_name):
     # page 2
     pdf.add_page()
     pdf.set_font('Arial', '', 12)
-    pdf.image("img/letterhead2.png", 0, 0, WIDTH)
+    pdf.image("./img/letterhead2.png", 0, 0, WIDTH)
     pdf.ln(22)
     pdf.set_left_margin(10)
     pdf.multi_cell(WIDTH/2-10,5, "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet.", border = 0)
@@ -77,7 +79,7 @@ def create_pdf(full_name):
     #pdf.image("img/chart.png", x = 10, y = 190, w = WIDTH/2-10)
     #pdf.ln(10)
     #pdf.write(4, f"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc,")
-    pdf.output('portfolio_suitability_report.pdf', 'F')
+    pdf.output('./pdf/portfolio_suitability_report.pdf', 'F')
     return
 
 def intro_message():
