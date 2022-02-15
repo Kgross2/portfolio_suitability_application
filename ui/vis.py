@@ -54,6 +54,8 @@ def save_vis_cumulative_return_distribution_benchmark(cumulative_returns_df_benc
         # lowest cumulative return of the benchmark but it displayed excellent resiliance during the
         # 2020-03 market dip.
         
+            # BENCHMARK
+        
 
 def save_45_day_rolling_volitility_benchmark(daily_returns_df_benchmark):
     daily_45_rolling_returns = daily_returns_df_benchmark.rolling(45).std()*np.sqrt(45)
@@ -88,6 +90,8 @@ def save_45_day_rolling_volitility_benchmark(daily_returns_df_benchmark):
         # volatility level overall, both investments pose a similar risk. Finally, we look at
         # IEF, this ETF has the lowest volatility of the benchmark by far, therefore it is the safest
         # investment.
+        
+            # BENCHMARK
 
 # def save_vis_daily_return_distribution_client(daily_returns_df_client):
 
@@ -126,13 +130,15 @@ def save_vis_cumulative_return_distribution_client(cumulative_returns_df_client)
     plt.xticks(rotation = 45) # Rotates X-Axis Ticks by 45-degrees
     plt.savefig("./img/cumulative_return_client.png")
 
-        # This visualization measures the cumulative returns of the program selected client 
-        # profile ETF.
+        # This visualization measures the cumulative returns of the selected client profile ETF 
+        # portfolio.
         # This ETF shares the same dip as the benchmark ETFs, this is because the value of the
         # entire market dropped around 2020-03. The y-axis represents change in the total value
         # of the ETF.
              
-        # PROBABLY NEEDS WORK
+        # NEEDS WORK
+        
+            # CLIENT
 
 def save_45_day_rolling_volitility_client(daily_returns_df_client):
     daily_45_rolling_returns = daily_returns_df_client.rolling(45).std()*np.sqrt(45)
@@ -149,8 +155,8 @@ def save_45_day_rolling_volitility_client(daily_returns_df_client):
     plt.plot(daily_45_rolling_returns, color='#2f852a')
     plt.xticks(rotation = 45) # Rotates X-Axis Ticks by 45-degrees
     plt.savefig("./img/45_day_vol_client.png")
-        # This visualization uses 45-day rolling volatility to compare each component of the program
-        # selected client profile ETF. Each line represents a different asset that makes up the
+        # This visualization uses 45-day rolling volatility to compare each ETF found in the selected
+        # client portfolio. Each line represents a different ETF that makes up the
         # portfolio. We can see that there is a mix of volatility in the portfolio, this allows a
         # portfolio to have more balance.
 
@@ -173,8 +179,8 @@ def save_vis_cumulative_return_benchmark_client(cumulative_returns_df_benchmark,
     plt.legend()
     plt.savefig("./img/cumulative_return_benchmark_client.png")
              
-    # This visualization compares the cumulative return of the program selected client profile ETF 
-    # to the SPY ETF. This graph shows us that the client ETF follows a similar pattern to SPY but
+    # This visualization compares the cumulative return of the selected client profile ETF portfolio
+    # to the SPY ETF. This graph shows us that the portfolio follows a similar pattern to SPY but
     # the values change at a lower rate. This is because SPY's price is based on the S&P 500 which
     # reflects the overarching market and the market experienced a large increase in value after the 
     # 2020-03 dip.
@@ -185,12 +191,16 @@ def plot_mc_sp(mc_sp):
     MC_sim_line_plot = mc_sp.plot_simulation()
     # # Save the plot for future use
     MC_sim_line_plot.get_figure().savefig("./img/mc_sp.png", bbox_inches="tight")
+             
+        #Need to work on
 
 def plot_mc_client(mc_client):
     # Plot simulation outcomes
     MC_sim_line_plot = mc_client.plot_simulation()
     # # Save the plot for future use
     MC_sim_line_plot.get_figure().savefig("./img/mc_client.png", bbox_inches="tight")
+             
+        #Need to work on
 
 def pie_chart_client_portfolio(client_portfolio, tickers):
     
@@ -203,6 +213,11 @@ def pie_chart_client_portfolio(client_portfolio, tickers):
             shadow=True, startangle=90)
     ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
     plt.savefig("./img/pie_chart_client_portfolio.png")
+             # This visualization shows us each ETF that makes up the selected client portfolio.
+             # A pie chart is used because it is a simple graph for users to understand exactly how
+             # the recommend portfolio is composed. It also provides users a faster understanding
+             # of the portfolio composition compared to other visualization options.
+
 
 
 
