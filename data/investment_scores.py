@@ -2,7 +2,7 @@ import pandas as pd
 
 def score_calculator(investment_amount, annual_income, annual_expenses, investing_experience, income_stability, risk_level, investment_length, investment_strategy):
         risk_score = 0
-        time_score = 0
+        
 
         investment_percent = investment_amount / annual_income
         disposible_income = annual_income - annual_expenses
@@ -37,23 +37,15 @@ def score_calculator(investment_amount, annual_income, annual_expenses, investin
 
         if investment_strategy == "Income":
             risk_score += 0
-        elif investment_strategy == "Income/Value":
-            risk_score += 20
-        elif investment_strategy == "Income/Growth":
-            risk_score += 20
         elif investment_strategy == "Income/Growth/Value":
-            risk_score += 25
-        elif investment_strategy == "Growth":
-            risk_score += 30
-        elif investment_strategy == "Value":
-            risk_score += 30
+            risk_score += 20
         elif investment_strategy == "Growth/Value":
-            risk_score += 30
+            risk_score += 40
 
-        return risk_score, time_score
+        return risk_score,
 
 
-def get_client_portfolio(risk_score, time_score):
+def get_client_portfolio(risk_score):
     fixed_income = [.40, .45, .04, .11]
     profile_1 = [.32, .36, .03, .09, .12, .08]
     profile_2 = [.21, .23, .04, .08, .04, .18, .06, .16]
