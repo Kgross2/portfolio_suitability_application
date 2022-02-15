@@ -16,10 +16,10 @@ def save_vis_daily_return_distribution_benchmark(daily_returns_df_benchmark):
         xlabel = "Daily Return",
         ylabel = "Frequency")
 
-    plt.hist(fourth, bins=10, color='#9B59B6', label="DIA")
+    plt.hist(fourth, bins=10, color='#c491d9', label="DIA")
     plt.hist(second, bins=10, color='#F8A241', label="SPY")
-    plt.hist(first, bins=10, color='#41933E', label="QQQ")
-    plt.hist(third, bins=10, color='#2C7BFF', label="IEF")
+    plt.hist(first, bins=10, color='#f0f06e', label="QQQ")
+    plt.hist(third, bins=10, color='#4f92ff', label="IEF")
     plt.savefig("./img/daily_return_benchmark.png")
 
 def save_vis_cumulative_return_distribution_benchmark(cumulative_returns_df_benchmark):
@@ -37,10 +37,10 @@ def save_vis_cumulative_return_distribution_benchmark(cumulative_returns_df_benc
         xlabel = "Year",
         ylabel = "Increase\n(%)")
 
-    plt.plot(first, label = "QQQ", color='#41933E')
+    plt.plot(first, label = "QQQ", color='#f0f06e')
     plt.plot(second, label = "SPY", color='#F8A241')
-    plt.plot(third, label = "IEF", color='#2C7BFF')
-    plt.plot(fourth, label = "DIA", color='#9B59B6')
+    plt.plot(third, label = "IEF", color='#4f92ff')
+    plt.plot(fourth, label = "DIA", color='#c491d9')
     plt.xticks(rotation = 45) # Rotates X-Axis Ticks by 45-degrees
     plt.legend()
     plt.savefig("./img/cumulative_return_benchmark.png")
@@ -62,10 +62,10 @@ def save_45_day_rolling_volitility_benchmark(daily_returns_df_benchmark):
         xlabel = "Time",
         ylabel = "Volatility")
 
-    plt.plot(first_45, label = "QQQ", color='#41933E')
+    plt.plot(first_45, label = "QQQ", color='#f0f06e')
     plt.plot(second_45, label = "SPY", color='#F8A241')
-    plt.plot(third_45, label = "IEF", color='#2C7BFF')
-    plt.plot(fourth_45, label = "DIA", color='#9B59B6')
+    plt.plot(third_45, label = "IEF", color='#4f92ff')
+    plt.plot(fourth_45, label = "DIA", color='#c491d9')
     plt.xticks(rotation = 45) # Rotates X-Axis Ticks by 45-degrees
     plt.legend()
     plt.savefig("./img/45_day_vol_benchmark.png")
@@ -81,7 +81,7 @@ def save_vis_daily_return_distribution_client(daily_returns_df_client):
         xlabel = "Daily Return",
         ylabel = "Frequency")
         
-    plt.hist(daily_returns_df_client)
+    plt.hist(daily_returns_df_client, color='#2f852a )
 
     plt.savefig("./img/daily_return_client.png")
 
@@ -96,7 +96,7 @@ def save_vis_cumulative_return_distribution_client(cumulative_returns_df_client)
         xlabel = "Year",
         ylabel = "Increase\n(%)")
 
-    plt.plot(cumulative_returns_df_client)
+    plt.plot(cumulative_returns_df_client, color='#2f852a')
     plt.xticks(rotation = 45) # Rotates X-Axis Ticks by 45-degrees
     plt.savefig("./img/cumulative_return_client.png")
 
@@ -112,7 +112,7 @@ def save_45_day_rolling_volitility_client(daily_returns_df_client):
         xlabel = "Time",
         ylabel = "Volatility")
 
-    plt.plot(daily_45_rolling_returns)
+    plt.plot(daily_45_rolling_returns, color='#2f852a')
     plt.xticks(rotation = 45) # Rotates X-Axis Ticks by 45-degrees
     plt.savefig("./img/45_day_vol_client.png")
 
@@ -129,8 +129,8 @@ def save_vis_cumulative_return_benchmark_client(cumulative_returns_df_benchmark,
         xlabel = "Year",
         ylabel = "Increase\n(%)")
 
-    plt.plot(first, label = "SPY", color='#41933E')
-    plt.plot(second, label = "Client Profile", color='#F8A241')
+    plt.plot(first, label = "SPY", color='#F8A241')
+    plt.plot(second, label = "Client Profile", color='#2f852a)
     plt.xticks(rotation = 45) # Rotates X-Axis Ticks by 45-degrees
     plt.legend()
     plt.savefig("./img/cumulative_return_benchmark_client.png")
