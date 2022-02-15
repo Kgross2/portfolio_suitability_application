@@ -60,15 +60,15 @@ def get_tickers(port_profile):
     if port_profile == "Fixed Income":
         tickers = ["AGG", "VCIT", "HYG", "BNDX"]
     elif port_profile == "Profile 1":
-        tickers = ["AGG", "VCIT", "HYG", "BNDX", "VTV", "VXUS"]
+        tickers = ["AGG", "VCIT", "HYG", "BNDX", "SPGP", "VXUS"]
     elif port_profile == "Profile 2":
-        tickers = ["AGG", "VCIT", "HYG", "BNDX", "EMB", "VTV", "IJH", "VXUS"]
+        tickers = ["AGG", "VCIT", "HYG", "BNDX", "EMB", "SPGP", "IJH", "VXUS"]
     elif port_profile == "Profile 3":
-        tickers = ["AGG", "VCIT", "HYG", "BNDX", "EMB", "VTV", "IJH", "VB", "VXUS", "VWO"]
+        tickers = ["AGG", "VCIT", "HYG", "BNDX", "EMB", "SPGP", "IJH", "VB", "VXUS", "VWO"]
     elif port_profile == "Profile 4":
-        tickers = ["AGG", "VCIT", "HYG", "BNDX", "EMB", "VTV", "IJH", "VB", "VXUS", "VWO"]
+        tickers = ["AGG", "VCIT", "HYG", "BNDX", "EMB", "SPGP", "IJH", "VB", "VXUS", "VWO"]
     elif port_profile == "Profile 5":
-        tickers = ["VTV", "IJH", "VB", "VXUS", "VWO"]
+        tickers = ["SPGP", "IJH", "VB", "VXUS", "VWO"]
     return tickers
 
 def get_client_data(alpaca, tickers, client_portfolio):
