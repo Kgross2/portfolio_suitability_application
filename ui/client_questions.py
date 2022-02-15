@@ -72,7 +72,7 @@ def investment_info():
     
     risk_level = questionary.select(
         "What is your level of risk?",
-        choices=["Low", "Moderate", "High", "Speculative"],
+        choices=["Low", "Moderate", "High"],
         instruction = '(Use arrow keys)',
         use_indicator= True,
         style=custom_style
@@ -80,7 +80,7 @@ def investment_info():
     
     investment_strategy = questionary.select(
         "What do you want to do with this investment?",
-        choices=["Income", "Growth", "Value", "Income/Growth", "Income/Value", "Growth/Value", "Income/Growth/Value"],
+        choices=["Income", "Income/Growth/Value", "Growth/Value"],
         instruction = '(Use arrow keys)',
         use_indicator= True,
         style=custom_style
