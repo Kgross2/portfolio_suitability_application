@@ -130,9 +130,8 @@ def save_vis_cumulative_return_distribution_client(cumulative_returns_df_client)
     plt.xticks(rotation = 45) # Rotates X-Axis Ticks by 45-degrees
     plt.savefig("./img/cumulative_return_client.png")
 
-        # This visualization measures the cumulative returns of the selected client profile ETF 
-        # portfolio.
-        # This ETF shares the same dip as the benchmark ETFs, this is because the value of the
+        # This visualization displays the cumulative returns of the selected client portfolio
+        # This portfolio shares the same dip as the benchmark ETFs, this is because the value of the
         # entire market dropped around 2020-03. The y-axis represents change in the total value
         # of the ETF.
              
@@ -179,7 +178,7 @@ def save_vis_cumulative_return_benchmark_client(cumulative_returns_df_benchmark,
     plt.legend()
     plt.savefig("./img/cumulative_return_benchmark_client.png")
              
-    # This visualization compares the cumulative return of the selected client profile ETF portfolio
+    # This visualization compares the cumulative return of the selected client portfolio
     # to the SPY ETF. This graph shows us that the portfolio follows a similar pattern to SPY but
     # the values change at a lower rate. This is because SPY's price is based on the S&P 500 which
     # reflects the overarching market and the market experienced a large increase in value after the 
@@ -217,6 +216,8 @@ def pie_chart_client_portfolio(client_portfolio, tickers):
              # A pie chart is used because it is a simple graph for users to understand exactly how
              # the recommend portfolio is composed. It also provides users a faster understanding
              # of the portfolio composition compared to other visualization options.
+             
+             # its on the front page of pdf, must be easily readable
 
 
 
