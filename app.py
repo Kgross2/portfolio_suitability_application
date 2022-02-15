@@ -12,7 +12,7 @@ from data.MCForecastTools import MCSimulation
 from ui.client_questions import basic_info, investment_info, financial_info
 from data.investment_scores import get_client_portfolio, score_calculator, get_MC_length
 from data.etf_data import get_benchmark_data, get_tickers, get_client_portfolio_data, get_client_data, get_MC_list_benchmark, get_MC_list_client, get_daily_returns, get_cumulative_returns, get_closing_prices_benchmark
-from ui.vis import save_vis_daily_return_distribution_benchmark, save_vis_cumulative_return_distribution_benchmark, save_45_day_rolling_volitility_benchmark, save_vis_daily_return_distribution_client, save_vis_cumulative_return_distribution_client, save_45_day_rolling_volitility_client, save_vis_cumulative_return_benchmark_client, plot_mc_sp, plot_mc_client   
+from ui.vis import save_vis_daily_return_distribution_benchmark, save_vis_cumulative_return_distribution_benchmark, save_45_day_rolling_volitility_benchmark, save_vis_daily_return_distribution_client, save_vis_cumulative_return_distribution_client, save_45_day_rolling_volitility_client, save_vis_cumulative_return_benchmark_client, plot_mc_sp, plot_mc_client, pie_chart_client_portfolio   
 from ui.client_output import clear_console, intro_message, create_info_img, exit_message, create_pdf     
 
 # Load env
@@ -71,6 +71,7 @@ def run():
    save_vis_cumulative_return_benchmark_client(cumulative_returns_df_benchmark, cumulative_returns_client_portfolio_df) 
    plot_mc_sp(MC_list_benchmark)
    plot_mc_client(MC_list_client)
+   pie_chart_client_portfolio(client_portfolio, tickers)
 
 # create the image and pdf from information above
    create_info_img(full_name, phone_number, email_address, annual_income, income_stability, annual_expenses, investment_amount, investment_length, risk_level, investment_strategy)

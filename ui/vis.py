@@ -147,4 +147,18 @@ def plot_mc_client(mc_client):
     # # Save the plot for future use
     MC_sim_line_plot.get_figure().savefig("./img/mc_client.png", bbox_inches="tight")
 
+def pie_chart_client_portfolio(client_portfolio, tickers):
+    
+    # Pie chart, where the slices will be ordered and plotted counter-clockwise:
+    labels = tickers
+    sizes = client_portfolio
+
+    fig1, ax1 = plt.subplots()
+    ax1.pie(sizes, labels=labels, autopct='%1.1f%%',
+            shadow=True, startangle=90)
+    ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+    plt.savefig("./img/pie_chart_client_portfolio.png")
+
+
+
 
