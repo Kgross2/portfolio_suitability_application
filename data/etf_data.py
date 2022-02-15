@@ -29,19 +29,7 @@ def get_benchmark_data(alpaca):
       limit=limit_rows
     ).df
 
-
-    # #  Create an empty `closing_prices_df` DataFrame using Pandas
-    # closing_prices_benchmark_df = pd.DataFrame()
-    # # Populate the `closing_prices_df` DataFrame by accessing the `close` column from the `prices_df` DataFrame for both KO and TSLA .
-    # closing_prices_benchmark_df["QQQ"] = prices_df_benchmark["QQQ"]["close"]
-    # closing_prices_benchmark_df["SPY"] = prices_df_benchmark["SPY"]["close"]
-    # closing_prices_benchmark_df["IEF"] = prices_df_benchmark["IEF"]["close"]
-    # closing_prices_benchmark_df["DIA"] = prices_df_benchmark["DIA"]["close"]
-
-    # daily_returns_benchmark_df = closing_prices_benchmark_df.pct_change().dropna()
-    # cumulative_returns_benchmark_df = (1+daily_returns_benchmark_df).cumprod()-1
-
-    return prices_df_benchmark #, closing_prices_benchmark_df, cumulative_returns_benchmark_df
+    return prices_df_benchmark
 
 def get_client_portfolio_data(alpaca, tickers):
     today = pd.Timestamp(date.today(), tz="America/New_York").isoformat()
@@ -64,20 +52,7 @@ def get_client_portfolio_data(alpaca, tickers):
     
     daily_returns_client_portfolio_df = closing_prices_client_portfolio_df.pct_change().dropna()
     cumulative_returns_client_portfolio_df = (1+daily_returns_client_portfolio_df).cumprod()-1
-    return daily_returns_client_portfolio_df, cumulative_returns_client_portfolio_df, closing_prices_client_portfolio_df 
-
-def get_MC_simulation_benchmark(closing_prices_benchmark_df):
-    weight = [0,0,0,1]
-    MC_fiveyear = MCSimulation(
-      portfolio_data = closing_prices_benchmark_df,
-      weights = weight,
-      num_simulation = 50,
-      num_trading_days = 252*5
-    )
-    MC_cum = MC_fiveyear.calc_cumulative_return()
-    MC_cum_mean = MC_cum.mean(axis=1)
-
-    return MC_cum, MC_cum_mean
+    return prices_df_client_portfolio, daily_returns_client_portfolio_df, cumulative_returns_client_portfolio_df, closing_prices_client_portfolio_df 
 
 def get_tickers(port_profile):
     tickers = []
@@ -96,7 +71,7 @@ def get_tickers(port_profile):
         tickers = ["VTV", "IJH", "VB", "VXUS", "VWO"]
     return tickers
 
-def get_client_data(alpaca, tickers):
+def get_client_data(alpaca, tickers, client_portfolio):
     tickers = tickers
     today = pd.Timestamp(date.today(), tz="America/New_York").isoformat()
     three_yrs_ago=pd.Timestamp(datetime.now() - relativedelta(years=3),tz="America/New_York").isoformat()
@@ -109,4 +84,53 @@ def get_client_data(alpaca, tickers):
       end=today,
       limit=limit_rows
     ).df
-    return prices_df_client
+
+    #  Create an empty `closing_prices_df` DataFrame using Pandas
+    closing_prices_client_portfolio_df = pd.DataFrame()
+    # Populate the `closing_prices_df` DataFrame by accessing the `close` column from the `prices_df` DataFrame for both KO and TSLA .
+    for ticker in tickers:
+      closing_prices_client_portfolio_df[ticker] = prices_df_client[ticker]["close"]
+    
+    daily_returns_client=closing_prices_client_portfolio_df.pct_change().dropna()
+    cumulative_returns_client = (1+daily_returns_client).cumprod()-1
+
+    i=0
+    cumulative_returns_client_portfolio=0
+    for ticker in tickers:
+        cumulative_returns_client_portfolio = cumulative_returns_client_portfolio+((1+daily_returns_client[ticker]).cumprod()-1)*client_portfolio[i]
+        i += 1
+
+    return prices_df_client, daily_returns_client, cumulative_returns_client_portfolio, closing_prices_client_portfolio_df
+
+def get_MC_list_benchmark(prices_df_benchmark, MC_length_days):
+   MC_list_benchmark =  MCSimulation(
+        portfolio_data=prices_df_benchmark,
+        weights=[0,0,0,1],
+        num_simulation=50,
+        num_trading_days=MC_length_days)
+   return MC_list_benchmark
+
+def get_MC_list_client(prices_df_client, client_portfolio, MC_length_days):
+   MC_list_client =  MCSimulation(
+        portfolio_data=prices_df_client,
+        weights=client_portfolio,
+        num_simulation=50,
+        num_trading_days=MC_length_days)
+   return MC_list_client
+
+def get_closing_prices_benchmark(daily_prices_df):
+    closing_prices_benchmark = pd.DataFrame()
+    closing_prices_benchmark["QQQ"] = daily_prices_df["QQQ"]["close"]
+    closing_prices_benchmark["SPY"] = daily_prices_df["SPY"]["close"]
+    closing_prices_benchmark["IEF"] = daily_prices_df["IEF"]["close"]
+    closing_prices_benchmark["DIA"] = daily_prices_df["DIA"]["close"]
+    return closing_prices_benchmark
+
+def get_cumulative_returns(daily_price_df):
+    daily_returns=daily_price_df.pct_change().dropna()
+    cumulative_returns = (1+daily_returns).cumprod()-1
+    return cumulative_returns
+
+def get_daily_returns(daily_price_df):
+    daily_returns=daily_price_df.pct_change().dropna()
+    return daily_returns

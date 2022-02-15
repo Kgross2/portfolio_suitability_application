@@ -36,7 +36,7 @@ def create_info_img(full_name, phone_number, email_address, annual_income, incom
     return
 
 
-def create_pdf(full_name):
+def create_pdf(full_name, MC_benchmark_summary, MC_client_summary):
     WIDTH = 215.9
     HEIGHT = 279.4
     pdf = FPDF('P', 'mm', 'Letter')
