@@ -1,26 +1,27 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-def save_vis_daily_return_distribution_benchmark(daily_returns_df_benchmark):
-    first = daily_returns_df_benchmark['QQQ']
-    second = daily_returns_df_benchmark["SPY"]
-    third = daily_returns_df_benchmark["IEF"]
-    fourth = daily_returns_df_benchmark["DIA"]
+# def save_vis_daily_return_distribution_benchmark(daily_returns_df_benchmark):
+#     first = daily_returns_df_benchmark['QQQ']
+#     second = daily_returns_df_benchmark["SPY"]
+#     third = daily_returns_df_benchmark["IEF"]
+#     fourth = daily_returns_df_benchmark["DIA"]
 
-    fig, ax = plt.subplots()
-    fig.set_figheight(10)
-    fig.set_figwidth(14)
-    ax.spines['top'].set_color('none')
-    ax.spines['right'].set_color('none')
-    ax.set(title = "Daily Return Distribution Benchmarks\n(2019-2022)",
-        xlabel = "Daily Return",
-        ylabel = "Frequency")
+#     fig, ax = plt.subplots()
+#     fig.set_figheight(10)
+#     fig.set_figwidth(14)
+#     ax.spines['top'].set_color('none')
+#     ax.spines['right'].set_color('none')
+#     ax.set(title = "Daily Return Distribution Benchmarks\n(2019-2022)",
+#         xlabel = "Daily Return",
+#         ylabel = "Frequency")
 
-    plt.hist(fourth, bins=10, color='#c491d9', label="DIA")
-    plt.hist(second, bins=10, color='#F8A241', label="SPY")
-    plt.hist(first, bins=10, color='#f0f06e', label="QQQ")
-    plt.hist(third, bins=10, color='#4f92ff', label="IEF")
-    plt.savefig("./img/daily_return_benchmark.png")
+#     plt.hist(fourth, bins=10, color='#c491d9', label="DIA")
+#     plt.hist(second, bins=10, color='#F8A241', label="SPY")
+#     plt.hist(first, bins=10, color='#f0f06e', label="QQQ")
+#     plt.hist(third, bins=10, color='#4f92ff', label="IEF")
+#    plt.savefig("./img/daily_return_benchmark.png")
+     # Scrapped
 
 def save_vis_cumulative_return_distribution_benchmark(cumulative_returns_df_benchmark):
     first = cumulative_returns_df_benchmark['QQQ']
@@ -44,6 +45,15 @@ def save_vis_cumulative_return_distribution_benchmark(cumulative_returns_df_benc
     plt.xticks(rotation = 45) # Rotates X-Axis Ticks by 45-degrees
     plt.legend()
     plt.savefig("./img/cumulative_return_benchmark.png")
+        # This figure displays the cumulative return of the benchmark ETFs.
+        # Cumulative return measures the total change in an investment's value over a specific 
+        # period. The y-axis label represents the percentage increase in value. (.75=75% increase)
+        # We can see that during a dip around 2020-03 where all the ETFs fell, besides IEF, QQQ
+        # experienced a larger boost in value compared to the other ETFs. This allowed QQQ to
+        # reach a return of 1.18 while the second highest return, SPY, was 0.69. IEF has the
+        # lowest cumulative return of the benchmark but it displayed excellent resiliance during the
+        # 2020-03 market dip.
+        
 
 def save_45_day_rolling_volitility_benchmark(daily_returns_df_benchmark):
     daily_45_rolling_returns = daily_returns_df_benchmark.rolling(45).std()*np.sqrt(45)
@@ -69,23 +79,39 @@ def save_45_day_rolling_volitility_benchmark(daily_returns_df_benchmark):
     plt.xticks(rotation = 45) # Rotates X-Axis Ticks by 45-degrees
     plt.legend()
     plt.savefig("./img/45_day_vol_benchmark.png")
+        # This visualization measures the 45-day rolling volatility of our benchmark ETFs.
+        # Volatility determines the risk associated with an investment, as the volatility rises the
+        # potential gain or loss increases.
+        # This graph is set over a time period of three years, (2019-20-12 - 2022-02-12).
+        # We can see that QQQ on average has the highest volatility among the ETFs, which means it
+        # poses the most risk. We can also see that SPY and DIA share a similar
+        # volatility level overall, both investments pose a similar risk. Finally, we look at
+        # IEF, this ETF has the lowest volatility of the benchmark by far, therefore it is the safest
+        # investment.
 
-def save_vis_daily_return_distribution_client(daily_returns_df_client):
+# def save_vis_daily_return_distribution_client(daily_returns_df_client):
 
-    fig, ax = plt.subplots()
-    fig.set_figheight(10)
-    fig.set_figwidth(14)
-    ax.spines['top'].set_color('none')
-    ax.spines['right'].set_color('none')
-    ax.set(title = "Daily Return Distribution Client Profile\n(2019-2022)",
-        xlabel = "Daily Return",
-        ylabel = "Frequency")
+#     fig, ax = plt.subplots()
+#     fig.set_figheight(10)
+#     fig.set_figwidth(14)
+#     ax.spines['top'].set_color('none')
+#     ax.spines['right'].set_color('none')
+#     ax.set(title = "Daily Return Distribution Client Profile\n(2019-2022)",
+#         xlabel = "Daily Return",
+#         ylabel = "Frequency")
         
-    plt.hist(daily_returns_df_client, color='#2f852a )
+#     plt.hist(daily_returns_df_client, color='#2f852a )
 
-    plt.savefig("./img/daily_return_client.png")
+#     plt.savefig("./img/daily_return_client.png")
+        # This graph uses daily return distribution to compare each component of the program 
+        # selected ETF. We can see the entire portfolio broken down into specific assets and compare
+        # their daily return distribution.
+        
+        # scrapped
+
 
 def save_vis_cumulative_return_distribution_client(cumulative_returns_df_client):
+        # Should be renamed without distribution, i think?
 
     fig, ax = plt.subplots()
     fig.set_figheight(10)
@@ -99,6 +125,14 @@ def save_vis_cumulative_return_distribution_client(cumulative_returns_df_client)
     plt.plot(cumulative_returns_df_client, color='#2f852a')
     plt.xticks(rotation = 45) # Rotates X-Axis Ticks by 45-degrees
     plt.savefig("./img/cumulative_return_client.png")
+
+        # This visualization measures the cumulative returns of the program selected client 
+        # profile ETF.
+        # This ETF shares the same dip as the benchmark ETFs, this is because the value of the
+        # entire market dropped around 2020-03. The y-axis represents change in the total value
+        # of the ETF.
+             
+        # PROBABLY NEEDS WORK
 
 def save_45_day_rolling_volitility_client(daily_returns_df_client):
     daily_45_rolling_returns = daily_returns_df_client.rolling(45).std()*np.sqrt(45)
@@ -115,6 +149,10 @@ def save_45_day_rolling_volitility_client(daily_returns_df_client):
     plt.plot(daily_45_rolling_returns, color='#2f852a')
     plt.xticks(rotation = 45) # Rotates X-Axis Ticks by 45-degrees
     plt.savefig("./img/45_day_vol_client.png")
+        # This visualization uses 45-day rolling volatility to compare each component of the program
+        # selected client profile ETF. Each line represents a different asset that makes up the
+        # portfolio. We can see that there is a mix of volatility in the portfolio, this allows a
+        # portfolio to have more balance.
 
 def save_vis_cumulative_return_benchmark_client(cumulative_returns_df_benchmark, cumulative_returns_df_client):
     first = cumulative_returns_df_benchmark['SPY']
@@ -134,6 +172,13 @@ def save_vis_cumulative_return_benchmark_client(cumulative_returns_df_benchmark,
     plt.xticks(rotation = 45) # Rotates X-Axis Ticks by 45-degrees
     plt.legend()
     plt.savefig("./img/cumulative_return_benchmark_client.png")
+             
+    # This visualization compares the cumulative return of the program selected client profile ETF 
+    # to the SPY ETF. This graph shows us that the client ETF follows a similar pattern to SPY but
+    # the values change at a lower rate. This is because SPY's price is based on the S&P 500 which
+    # reflects the overarching market and the market experienced a large increase in value after the 
+    # 2020-03 dip.
+
 
 def plot_mc_sp(mc_sp):
     # Plot simulation outcomes
