@@ -54,16 +54,13 @@ def score_calculator(investment_amount, annual_income, annual_expenses, investin
 
 
 def get_client_portfolio(risk_score, time_score):
-    fixed_income = [.02, .38, .45, .04, .11]
-    profile_1 = [.02, .30, .36, .03, .09, .12, .08]
-    profile_2 = [.02, .19, .23, .04, .08, .04, .18, .06, .16]
-    profile_3 = [.02, .09, .23, .04, .08, .04, .24, .09, .03, .20, .04]
-    profile_4 = [.02, .03, .06, .03, .03, .03, .32, .10, .06, .26, .06]
-    profile_5 = [.02, .38, .13, .07, .33, .07]
+    fixed_income = [.40, .45, .04, .11]
+    profile_1 = [.32, .36, .03, .09, .12, .08]
+    profile_2 = [.21, .23, .04, .08, .04, .18, .06, .16]
+    profile_3 = [.11, .23, .04, .08, .04, .24, .09, .03, .20, .04]
+    profile_4 = [.05, .06, .03, .03, .03, .32, .10, .06, .26, .06]
+    profile_5 = [.40, .13, .07, .33, .07]
 
-    # portfolio_list = [fixed_income, profile_1, profile_2, profile_3, profile_4 ,profile_5]
-    # portfolio = []
-    
     if risk_score in range(0, 11):
         client_portfolio = fixed_income
         port_profile = "Fixed Income"
@@ -85,14 +82,18 @@ def get_client_portfolio(risk_score, time_score):
 
     return client_portfolio, port_profile, risk_score
 
-def get_MC_end_date(investment_length):
-    MC_end_date = []
+def get_MC_length(investment_length):
+    MC_length_days = []
     if investment_length == "0-1":
-        MC_end_date = pd.Timestamp("2021-02-01", tz="America/New_York").isoformat()
+        MC_length_days = 252*1
+        MC_length_str = "1 year"
     if investment_length == "2-4":
-        MC_end_date = pd.Timestamp("2020-02-01", tz="America/New_York").isoformat()
+        MC_length_days = 252*4
+        MC_length_str = "4 years"
     if investment_length == "5-9":
-        MC_end_date = pd.Timestamp("2019-02-01", tz="America/New_York").isoformat()
+        MC_length_str = "9 years"
+        MC_length_days = 252*9
     if investment_length == "10+":
-        MC_end_date = pd.Timestamp("2019-02-01", tz="America/New_York").isoformat()
-    return MC_end_date
+        MC_length_days = 252*20
+        MC_length_str = "20 years"
+    return MC_length_days, MC_length_str
