@@ -15,7 +15,7 @@ def save_vis_cumulative_return_distribution_benchmark(cumulative_returns_df_benc
     ax.spines['right'].set_color('none')
     ax.set(title = "Cumulative Returns Benchmarks\n(2019-2022)",
         xlabel = "Year",
-        ylabel = "Increase\n(%)")
+        ylabel = "Return\n(%)")
 
     plt.plot(first, label = "QQQ", color='#f0f06e')
     plt.plot(second, label = "SPY", color='#F8A241')
