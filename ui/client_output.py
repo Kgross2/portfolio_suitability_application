@@ -187,13 +187,6 @@ def create_pdf(full_name, port_profile, MC_length_str):
     pdf.image("./img/letterhead2.png", 0, 0, WIDTH)
     pdf.multi_cell(WIDTH-20,5, f"Appendix - 45 Day Volatility Client Portfolios", border = 0, align = "Center")
     pdf.image("img/45_day_vol_client.png", x = 10, y = 75, w = WIDTH-20)
-
-    # page 9
-    pdf.add_page()
-    pdf.set_font('Arial', '', 16)
-    pdf.image("./img/letterhead2.png", 0, 0, WIDTH)
-    pdf.multi_cell(WIDTH-20,5, f"Appendix - Portfolio Pie Chart", border = 0, align = "Center")
-    pdf.image("img/pie_chart_client_portfolio.png", x = 10, y = 75, w = WIDTH-20)
  
  
 
@@ -218,7 +211,7 @@ def intro_message():
     print("    ╬╬╬╬╬╬╗,,╠╓Φ╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬")
     print("    ╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬")
     print("    ╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬")
-    print("Hello.  Welcome to the JACK Financial Portfolio Suitability Application.  This application will ask you a series of questions and then create a portfolio plan for you.  Upon completion, one of our brokers will reach out to you to schedule a time to review the recommendations.  Let's get started by getting to know you better.")
+    print("Hello.  Welcome to the JACK Financial Portfolio Suitability Application.  This application will ask you a series of questions and then create a portfolio plan for you.  Upon completion, one of our brokers will reach out to you to schedule a time to review the recommendations.  Let's get started by getting to know you better. Be aware that after you enter your information, the application will run a simulation.  It may take a few minutes.")
 
 def exit_message(full_name):
     print(f"Thank you {full_name} for using our service.  Your information has been processed and our broker team will be in touch with you soon." )

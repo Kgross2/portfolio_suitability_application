@@ -44,11 +44,13 @@ def financial_info():
         style=custom_style
         ).ask())
     
-    income_stability = questionary.text(
+    income_stability = questionary.select(
         "Is your source of income stable?",
-        instruction = '(YES or NO)',
+        choices=["Yes", "No"],
+        instruction = '(Use arrow keys)',
+        use_indicator= True,
         style=custom_style
-        ).ask(YES_OR_NO)
+        ).ask()
 
     # convert variable type
     annual_income = float(annual_income)
@@ -79,7 +81,7 @@ def investment_info():
     ).ask()
     
     investment_strategy = questionary.select(
-        "What do you want to do with this investment?",
+        "What type of investment strategy do you want?",
         choices=["Income", "Income/Growth/Value", "Growth/Value"],
         instruction = '(Use arrow keys)',
         use_indicator= True,

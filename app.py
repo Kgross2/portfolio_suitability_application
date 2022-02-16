@@ -15,19 +15,6 @@ from data.etf_data import get_benchmark_data, get_tickers, get_client_portfolio_
 from ui.vis import save_vis_cumulative_return_distribution_benchmark, save_45_day_rolling_volitility_benchmark, save_vis_cumulative_return_distribution_client, save_45_day_rolling_volitility_client, save_vis_cumulative_return_benchmark_client, plot_mc_sp, plot_mc_client, pie_chart_client_portfolio   
 from ui.client_output import clear_console, intro_message, create_info_img, exit_message, create_pdf, create_MC_comparison_img     
 
-###  This is dummy data for testing to avoid having to enter info in Questionary for testing.  DELETE WHEN UNNEEDED
-full_name = "Jacob"
-phone_number = "713-555-7834"
-email_address = "cdb@bcg.law"
-annual_income = 10000
-investing_experience = 10
-investment_amount = 10000
-annual_expenses = 5000
-income_stability = "Yes"
-risk_level = "Moderate"
-investment_strategy = "Growth/Value"
-investment_length = "0-1"
-
 # Load env
 load_dotenv()
 alpaca_api_key = os.getenv("ALPACA_API_KEY")
@@ -45,11 +32,11 @@ def run():
    clear_console()
    intro_message()
 
-# # fire the client questions (basic, financial, investment)
+# fire the client questions (basic, financial, investment)
 
-#    full_name, phone_number, email_address = basic_info()
-#    annual_income, annual_expenses, income_stability = financial_info()
-#    investing_experience, investment_amount, risk_level, investment_strategy, investment_length = investment_info()
+   full_name, phone_number, email_address = basic_info()
+   annual_income, annual_expenses, income_stability = financial_info()
+   investing_experience, investment_amount, risk_level, investment_strategy, investment_length = investment_info()
 
 # fire risk calculator
    risk_score = score_calculator(investment_amount, annual_income, annual_expenses, investing_experience, income_stability, risk_level, investment_length, investment_strategy)

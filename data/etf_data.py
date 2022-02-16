@@ -106,7 +106,7 @@ def get_MC_list_benchmark(prices_df_benchmark, MC_length_days):
    MC_list_benchmark =  MCSimulation(
         portfolio_data=prices_df_benchmark,
         weights=[0,0,0,1],
-        num_simulation=50,
+        num_simulation=500,
         num_trading_days=MC_length_days)
    return MC_list_benchmark
 
@@ -114,7 +114,7 @@ def get_MC_list_client(prices_df_client, client_portfolio, MC_length_days):
    MC_list_client =  MCSimulation(
         portfolio_data=prices_df_client,
         weights=client_portfolio,
-        num_simulation=50,
+        num_simulation=500,
         num_trading_days=MC_length_days)
    return MC_list_client
 
