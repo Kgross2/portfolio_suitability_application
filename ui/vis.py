@@ -1,27 +1,6 @@
+from locale import normalize
 import matplotlib.pyplot as plt
 import numpy as np
-
-# def save_vis_daily_return_distribution_benchmark(daily_returns_df_benchmark):
-#     first = daily_returns_df_benchmark['QQQ']
-#     second = daily_returns_df_benchmark["SPY"]
-#     third = daily_returns_df_benchmark["IEF"]
-#     fourth = daily_returns_df_benchmark["DIA"]
-
-#     fig, ax = plt.subplots()
-#     fig.set_figheight(10)
-#     fig.set_figwidth(14)
-#     ax.spines['top'].set_color('none')
-#     ax.spines['right'].set_color('none')
-#     ax.set(title = "Daily Return Distribution Benchmarks\n(2019-2022)",
-#         xlabel = "Daily Return",
-#         ylabel = "Frequency")
-
-#     plt.hist(fourth, bins=10, color='#c491d9', label="DIA")
-#     plt.hist(second, bins=10, color='#F8A241', label="SPY")
-#     plt.hist(first, bins=10, color='#f0f06e', label="QQQ")
-#     plt.hist(third, bins=10, color='#4f92ff', label="IEF")
-#    plt.savefig("./img/daily_return_benchmark.png")
-     # Scrapped
 
 def save_vis_cumulative_return_distribution_benchmark(cumulative_returns_df_benchmark):
     first = cumulative_returns_df_benchmark['QQQ']
@@ -55,23 +34,27 @@ def save_vis_cumulative_return_distribution_benchmark(cumulative_returns_df_benc
         # 2020-03 market dip.
         
 
-def save_45_day_rolling_volitility_benchmark(daily_returns_df_benchmark):
-    daily_45_rolling_returns = daily_returns_df_benchmark.rolling(45).std()*np.sqrt(45)
+def save_45_day_rolling_volitility_benchmark(daily_returns_df_benchmark, daily_returns_df_client):
+    daily_45_rolling_returns_benchmark = daily_returns_df_benchmark.rolling(45).std()*np.sqrt(45)
+    daily_45_rolling_returns_client = daily_returns_df_client.rolling(45).std()*np.sqrt(45)
+    daily_45_rolling_returns_client=daily_45_rolling_returns_client.mean(axis=1)
 
-    first_45 = daily_45_rolling_returns['QQQ']
-    second_45 = daily_45_rolling_returns["SPY"]
-    third_45 = daily_45_rolling_returns["IEF"]
-    fourth_45 = daily_45_rolling_returns["DIA"]
+    first_45 = daily_45_rolling_returns_benchmark['QQQ']
+    second_45 = daily_45_rolling_returns_benchmark["SPY"]
+    third_45 = daily_45_rolling_returns_benchmark["IEF"]
+    fourth_45 = daily_45_rolling_returns_benchmark["DIA"]
+    fifth_45 = daily_45_rolling_returns_client
 
     fig, ax = plt.subplots()
     fig.set_figheight(10)
     fig.set_figwidth(14)
     ax.spines['top'].set_color('none')
     ax.spines['right'].set_color('none')
-    ax.set(title = "Rolling 45-day Volatility Benchmarks\n(2019-2022)",
+    ax.set(title = "Rolling 45-day Volatility Benchmarks with Client Portfolio Components\n(2019-2022)",
         xlabel = "Time",
         ylabel = "Volatility")
 
+    plt.plot(fifth_45, label = "Client Portfolio", color='#2f852a')
     plt.plot(first_45, label = "QQQ", color='#f0f06e')
     plt.plot(second_45, label = "SPY", color='#F8A241')
     plt.plot(third_45, label = "IEF", color='#4f92ff')
@@ -88,26 +71,6 @@ def save_45_day_rolling_volitility_benchmark(daily_returns_df_benchmark):
         # volatility level overall, both investments pose a similar risk. Finally, we look at
         # IEF, this ETF has the lowest volatility of the benchmark by far, therefore it is the safest
         # investment.
-
-# def save_vis_daily_return_distribution_client(daily_returns_df_client):
-
-#     fig, ax = plt.subplots()
-#     fig.set_figheight(10)
-#     fig.set_figwidth(14)
-#     ax.spines['top'].set_color('none')
-#     ax.spines['right'].set_color('none')
-#     ax.set(title = "Daily Return Distribution Client Profile\n(2019-2022)",
-#         xlabel = "Daily Return",
-#         ylabel = "Frequency")
-        
-#     plt.hist(daily_returns_df_client, color='#2f852a )
-
-#     plt.savefig("./img/daily_return_client.png")
-        # This graph uses daily return distribution to compare each component of the program 
-        # selected ETF. We can see the entire portfolio broken down into specific assets and compare
-        # their daily return distribution.
-        
-        # scrapped
 
 
 def save_vis_cumulative_return_distribution_client(cumulative_returns_df_client):
@@ -136,6 +99,7 @@ def save_vis_cumulative_return_distribution_client(cumulative_returns_df_client)
 
 def save_45_day_rolling_volitility_client(daily_returns_df_client):
     daily_45_rolling_returns = daily_returns_df_client.rolling(45).std()*np.sqrt(45)
+    daily_45_rolling_returns_client=daily_45_rolling_returns.mean(axis=1)
 
     fig, ax = plt.subplots()
     fig.set_figheight(10)
@@ -146,7 +110,8 @@ def save_45_day_rolling_volitility_client(daily_returns_df_client):
         xlabel = "Time",
         ylabel = "Volatility")
 
-    plt.plot(daily_45_rolling_returns, color='#2f852a')
+    plt.plot(daily_45_rolling_returns, color='#b6d7a8')
+    plt.plot(daily_45_rolling_returns_client, color='#2f852a')
     plt.xticks(rotation = 45) # Rotates X-Axis Ticks by 45-degrees
     plt.savefig("./img/45_day_vol_client.png")
         # This visualization uses 45-day rolling volatility to compare each component of the program
@@ -168,7 +133,7 @@ def save_vis_cumulative_return_benchmark_client(cumulative_returns_df_benchmark,
         ylabel = "Increase\n(%)")
 
     plt.plot(first, label = "SPY", color='#F8A241')
-    plt.plot(second, label = "Client Profile", color='#2f852a)
+    plt.plot(second, label = "Client Profile", color='#2f852a')
     plt.xticks(rotation = 45) # Rotates X-Axis Ticks by 45-degrees
     plt.legend()
     plt.savefig("./img/cumulative_return_benchmark_client.png")
@@ -200,7 +165,7 @@ def pie_chart_client_portfolio(client_portfolio, tickers):
 
     fig1, ax1 = plt.subplots()
     ax1.pie(sizes, labels=labels, autopct='%1.1f%%',
-            shadow=True, startangle=90)
+            shadow=True, startangle=90, normalize=True)
     ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
     plt.savefig("./img/pie_chart_client_portfolio.png")
 

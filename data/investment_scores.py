@@ -34,15 +34,14 @@ def score_calculator(investment_amount, annual_income, annual_expenses, investin
         elif risk_level == "High":
             risk_score += 50
 
-
         if investment_strategy == "Income":
-            risk_score += 0
+            risk_score = 0
         elif investment_strategy == "Income/Growth/Value":
             risk_score += 20
         elif investment_strategy == "Growth/Value":
             risk_score += 40
 
-        return risk_score,
+        return risk_score
 
 
 def get_client_portfolio(risk_score):
@@ -53,7 +52,7 @@ def get_client_portfolio(risk_score):
     profile_4 = [.05, .06, .03, .03, .03, .32, .10, .06, .26, .06]
     profile_5 = [.40, .13, .07, .33, .07]
 
-    if risk_score in range(0, 11):
+    if risk_score in range(-100, 11):
         client_portfolio = fixed_income
         port_profile = "Fixed Income"
     elif risk_score in range(11, 21):
