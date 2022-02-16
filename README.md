@@ -1,4 +1,45 @@
-# investor_assessment_app
+## JACK Financial's Portffolio Suitability Application
+
+One of the most powerful psychological pulls is the urge to reciprocate.  When a person receives a gift, even when it is unrequested or of limited value, the person feels a strong urge to return the favor.  Building on this idea, this Portfolio Suitability Application allows a user to answer a series of questions.  These questions create a customized portfolio plan, composed of multiple ETFs, based upon the potential client's risk tolerance and investing horizon.  Additionally, this report contains graphs and charts that can be the springboard to a demonstration of expertise by the financial advisor.  Most importantly, the application is simple to use.
+
+---
+
+## Technologies
+
+The requirements for running this CLI application are found in the root directory in the file requirements.txt.  These requirements can be installed using the following command.
+
+`pip install -r requirements.txt`
+
+The install will verify that the following are installed in the necessary directory to run the application:
+
+- alpaca_trade_api==1.4.3
+- fire==0.4.0
+- fpdf==1.7.2
+- matplotlib==3.4.3
+- numpy==1.20.3
+- pandas==1.3.4
+- Pillow==9.0.1
+- python-dotenv==0.19.2
+- python_dateutil==2.8.2
+- pytz==2021.3
+- questionary==1.10.0
+
+In addition to these libraries, you will need to have a .env file containing your alpaca key and your alpaca secret key.  An explanation for creating an installing a .env file is beyond the scope of this README file, but can be found [here](https://www.youtube.com/watch?v=7LFLV8VsN9o).  You can obtain your alpaca keys [here](https://alpaca.markets).
+
+## CLI Application Launch
+
+Once the above are installed, your .env file is created that contains your alpaca keys, navigate to the directory containing the app.py file and enter the following:
+
+`python app.py`
+
+Once you have launched the application, you will be welcomed with the following message:
+
+![](img/1.png)
+
+
+---
+
+
 
 #Overview - business purpose
 This FinTech app is designed to help financial advisors attract new client by providing a free report. The app takes basic information 
@@ -95,3 +136,78 @@ This app is brought to you by Jack Investments founded by Charles Brown, Jacob B
 
 #License
 MIT
+
+---
+
+## Technologies
+
+This application runs in a Jupyter Notebook.  
+
+It imports:
+- os
+- requests
+- json
+- pandas
+- dotenv
+- alpaca_trade_api
+- MCForecastTools 
+- matplotlib
+
+![](./img/1.png)
+---
+
+## Installation Guide
+
+To properly run this application, you must have MCForecastTools.  Additionally, you will need a .env file containing credentials for Alpaca.  If you do not have credentials, visit *[Alpaca Markets](https://alpaca.markets)*. Otherwise, this software does not require installation.  Simply navigate to the appropriate directory in your terminal and launch a Jupyter Notebook.  Then open the file called financial_planning_tools.ipynb.
+
+---
+
+## Usage
+
+The application begins by accepting a variable for the total number of cryptocurrencies in the member's portfolio.
+
+![](./img/2.png)
+
+After pulling the current price of Bitcoin and Ether, the application calculates the total value of the member's cryptocurrency holdings.
+
+![](./img/3.png)
+
+Next, the applications accepts the amount of stock the member holds.  Here, the stocks held are a stock etf (SPY) and a bond etf (AGG).
+
+![](./img/4.png)
+
+The application then pulls the current (or last) closing price for the stocks.
+
+![](./img/5.png)
+
+It then calculates the total current value of the member's portfolio.
+
+![](./img/6.png)
+
+The overall weight of the portfolio components is presented in pie chart form.
+
+![](./img/7.png)
+
+That number is then used, along with the member's monthly budget to evaluate whether the member has an adequate emergency fund.
+
+![](./img/8.png)
+
+From there, the application runs a Monte Carlo simulation and presents the results in two forms: a line graph and a distribution graph.  Here are the results of a 30-year and a 10-year simulation.
+
+![](./img/9.png)
+![](./img/10.png)
+![](./img/11.png)
+![](./img/12.png)
+
+
+---
+
+## Contributors
+
+This project was created as a part of the Rice FinTech Bootcamp.
+
+---
+
+## License
+
+This software is licensed for use under the included MIT License.
