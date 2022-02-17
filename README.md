@@ -26,7 +26,7 @@ The install will verify that the following are installed in the necessary direct
 
 In addition to these libraries, you will need to have a .env file containing your alpaca key and your alpaca secret key.  An explanation for creating an installing a .env file is beyond the scope of this README file, but can be found [here](https://www.youtube.com/watch?v=7LFLV8VsN9o).  You can obtain your alpaca keys [here](https://alpaca.markets).
 
-## CLI Application Launch
+## CLI Application Launch and Use
 
 Once the above are installed, your .env file is created that contains your alpaca keys, navigate to the directory containing the app.py file and enter the following:
 
@@ -34,25 +34,29 @@ Once the above are installed, your .env file is created that contains your alpac
 
 Once you have launched the application, you will be welcomed with the following message:
 
-![](img/1.png)
+![](./img/1.png)
 
 
 ---
 
+After launch, the user will be asked a series of questions about their personal information, their financial information, and their investing experience and preferences.  
+
+![](./img/2.png)
 
 
-#Overview - business purpose
-This FinTech app is designed to help financial advisors attract new client by providing a free report. The app takes basic information 
-input by the advisor and/ or client and provides a recommended portfolio of ETFs based on the potential client's risk profile.
-The report includes monte carlo simulations and portfolio comparisons.
-The advisor can then leverage this free report into an ongoing client relationship.
+SHOW OUT PUT PDF
 
-#Financial details
+
+## Backend Tools
+
+## Financial details
+
 The app uses 6 profiles that are simplified versions of profiles created by RBC Wealth Management.
 The RBC Welath Management Model: !(Resources/RCC_wealth_mgt_model.png)
 
 ETFs are mapped to the 6 profiles using the risk percentages provided by RBC.
 RBC percentages mapped to ETFs: (input graph link)
+
 
 ETFs were chosen by xxxx
 
