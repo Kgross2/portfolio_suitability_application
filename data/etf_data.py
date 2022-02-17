@@ -1,3 +1,4 @@
+# load imports
 import pandas as pd
 from dotenv import load_dotenv
 import alpaca_trade_api as tradeapi
@@ -15,6 +16,7 @@ alpaca = tradeapi.REST(
     alpaca_secret_key,
     api_version="v2")
 
+# Uses Alpaca to pull three years of data for benchmark indicies
 def get_benchmark_data(alpaca):
     tickers = ["QQQ","SPY", "IEF", "DIA"]
     today = pd.Timestamp(date.today(), tz="America/New_York").isoformat()
@@ -31,29 +33,32 @@ def get_benchmark_data(alpaca):
 
     return prices_df_benchmark
 
-def get_client_portfolio_data(alpaca, tickers):
-    today = pd.Timestamp(date.today(), tz="America/New_York").isoformat()
-    three_yrs_ago=pd.Timestamp(datetime.now() - relativedelta(years=3),tz="America/New_York").isoformat()
-    timeframe = "1D"
-    limit_rows=1000
-    prices_df_client_portfolio = alpaca.get_barset(
-      tickers,
-      timeframe,
-      start=three_yrs_ago,
-      end=today,
-      limit=limit_rows
-    ).df
+# # Alternative construction fof client data pull
+# def get_client_portfolio_data(alpaca, tickers):
+#     today = pd.Timestamp(date.today(), tz="America/New_York").isoformat()
+#     three_yrs_ago=pd.Timestamp(datetime.now() - relativedelta(years=3),tz="America/New_York").isoformat()
+#     timeframe = "1D"
+#     limit_rows=1000
+#     prices_df_client_portfolio = alpaca.get_barset(
+#       tickers,
+#       timeframe,
+#       start=three_yrs_ago,
+#       end=today,
+#       limit=limit_rows
+#     ).df
 
-    #  Create an empty `closing_prices_df` DataFrame using Pandas
-    closing_prices_client_portfolio_df = pd.DataFrame()
-    # Populate the `closing_prices_df` DataFrame by accessing the `close` column from the `prices_df` DataFrame for both KO and TSLA .
-    for ticker in tickers:
-      closing_prices_client_portfolio_df[ticker] = prices_df_client_portfolio[ticker]["close"]
+#     #  Create an empty `closing_prices_df` DataFrame using Pandas
+#     closing_prices_client_portfolio_df = pd.DataFrame()
+#     # Populate the `closing_prices_df` DataFrame by accessing the `close` column from the `prices_df` DataFrame for both KO and TSLA .
+#     for ticker in tickers:
+#       closing_prices_client_portfolio_df[ticker] = prices_df_client_portfolio[ticker]["close"]
     
-    daily_returns_client_portfolio_df = closing_prices_client_portfolio_df.pct_change().dropna()
-    cumulative_returns_client_portfolio_df = (1+daily_returns_client_portfolio_df).cumprod()-1
-    return prices_df_client_portfolio, daily_returns_client_portfolio_df, cumulative_returns_client_portfolio_df, closing_prices_client_portfolio_df 
+#     # Cleans the data and converts to daily returns and cumulative returns
+#     daily_returns_client_portfolio_df = closing_prices_client_portfolio_df.pct_change().dropna()
+#     cumulative_returns_client_portfolio_df = (1+daily_returns_client_portfolio_df).cumprod()-1
+#     return prices_df_client_portfolio, daily_returns_client_portfolio_df, cumulative_returns_client_portfolio_df, closing_prices_client_portfolio_df 
 
+# Gets the tickers for the portfolio based on the clients profile
 def get_tickers(port_profile):
     tickers = []
 
@@ -71,6 +76,7 @@ def get_tickers(port_profile):
         tickers = ["SPGP", "IJH", "VB", "VXUS", "VWO"]
     return tickers
 
+# Uses Alpaca to pull three years of historical data based on the clients tickers
 def get_client_data(alpaca, tickers, client_portfolio):
     tickers = tickers
     today = pd.Timestamp(date.today(), tz="America/New_York").isoformat()
@@ -87,13 +93,15 @@ def get_client_data(alpaca, tickers, client_portfolio):
 
     #  Create an empty `closing_prices_df` DataFrame using Pandas
     closing_prices_client_portfolio_df = pd.DataFrame()
+
     # Populate the `closing_prices_df` DataFrame by accessing the `close` column from the `prices_df` DataFrame for both KO and TSLA .
     for ticker in tickers:
       closing_prices_client_portfolio_df[ticker] = prices_df_client[ticker]["close"]
-    
-    daily_returns_client=closing_prices_client_portfolio_df.pct_change().dropna()
-    cumulative_returns_client = (1+daily_returns_client).cumprod()-1
 
+    # Cleans the data and converts to daily returns and cumulative returns
+    daily_returns_client=closing_prices_client_portfolio_df.pct_change().dropna()
+
+    # Creates Cumulative Return for each ETF in the portfolio
     i=0
     cumulative_returns_client_portfolio=0
     for ticker in tickers:
@@ -102,6 +110,7 @@ def get_client_data(alpaca, tickers, client_portfolio):
 
     return prices_df_client, daily_returns_client, cumulative_returns_client_portfolio, closing_prices_client_portfolio_df
 
+# Runs simulation for benchmark data
 def get_MC_list_benchmark(prices_df_benchmark, MC_length_days):
    MC_list_benchmark =  MCSimulation(
         portfolio_data=prices_df_benchmark,
@@ -110,6 +119,7 @@ def get_MC_list_benchmark(prices_df_benchmark, MC_length_days):
         num_trading_days=MC_length_days)
    return MC_list_benchmark
 
+# Runs simulation for client data
 def get_MC_list_client(prices_df_client, client_portfolio, MC_length_days):
    MC_list_client =  MCSimulation(
         portfolio_data=prices_df_client,
@@ -118,6 +128,7 @@ def get_MC_list_client(prices_df_client, client_portfolio, MC_length_days):
         num_trading_days=MC_length_days)
    return MC_list_client
 
+# Gets closing prices for benchmark data
 def get_closing_prices_benchmark(daily_prices_df):
     closing_prices_benchmark = pd.DataFrame()
     closing_prices_benchmark["QQQ"] = daily_prices_df["QQQ"]["close"]
@@ -126,11 +137,13 @@ def get_closing_prices_benchmark(daily_prices_df):
     closing_prices_benchmark["DIA"] = daily_prices_df["DIA"]["close"]
     return closing_prices_benchmark
 
+# Calculates cumulative returns
 def get_cumulative_returns(daily_price_df):
     daily_returns=daily_price_df.pct_change().dropna()
     cumulative_returns = (1+daily_returns).cumprod()-1
     return cumulative_returns
 
+# Calculates daily returns
 def get_daily_returns(daily_price_df):
     daily_returns=daily_price_df.pct_change().dropna()
     return daily_returns
