@@ -83,7 +83,7 @@ def save_vis_cumulative_return_distribution_client(cumulative_returns_df_client)
     ax.spines['right'].set_color('none')
     ax.set(title = "Cumulative Returns Client Profile\n(2019-2022)",
         xlabel = "Year",
-        ylabel = "Increase\n(%)")
+        ylabel = "Return\n(%)")
 
     plt.plot(cumulative_returns_df_client, color='#2f852a')
     plt.xticks(rotation = 45) # Rotates X-Axis Ticks by 45-degrees
