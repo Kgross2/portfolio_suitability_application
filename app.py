@@ -12,8 +12,8 @@ from data.MCForecastTools import MCSimulation
 from ui.client_questions import basic_info, investment_info, financial_info
 from data.investment_scores import get_client_portfolio, score_calculator, get_MC_length
 from data.etf_data import get_benchmark_data, get_tickers, get_client_portfolio_data, get_client_data, get_MC_list_benchmark, get_MC_list_client, get_daily_returns, get_cumulative_returns, get_closing_prices_benchmark
-from ui.vis import save_vis_daily_return_distribution_benchmark, save_vis_cumulative_return_distribution_benchmark, save_45_day_rolling_volitility_benchmark, save_vis_daily_return_distribution_client, save_vis_cumulative_return_distribution_client, save_45_day_rolling_volitility_client, save_vis_cumulative_return_benchmark_client, plot_mc_sp, plot_mc_client, pie_chart_client_portfolio   
-from ui.client_output import clear_console, intro_message, create_info_img, exit_message, create_pdf     
+from ui.vis import save_vis_cumulative_return_distribution_benchmark, save_45_day_rolling_volitility_benchmark, save_vis_cumulative_return_distribution_client, save_45_day_rolling_volitility_client, save_vis_cumulative_return_benchmark_client, plot_mc_sp, plot_mc_client, pie_chart_client_portfolio   
+from ui.client_output import clear_console, intro_message, create_info_img, exit_message, create_pdf, create_MC_comparison_img     
 
 # Load env
 load_dotenv()
@@ -38,11 +38,11 @@ def run():
    annual_income, annual_expenses, income_stability = financial_info()
    investing_experience, investment_amount, risk_level, investment_strategy, investment_length = investment_info()
 
-# fire risk and time score calculator
-   risk_score, time_score = score_calculator(investment_amount, annual_income, annual_expenses, investing_experience, income_stability, risk_level, investment_length, investment_strategy)
+# fire risk calculator
+   risk_score = score_calculator(investment_amount, annual_income, annual_expenses, investing_experience, income_stability, risk_level, investment_length, investment_strategy)
 
 # use risk and time score to select the clients portfolio profile, start date, and portfolio tickers 
-   client_portfolio, port_profile, risk_score = get_client_portfolio(risk_score, time_score)
+   client_portfolio, port_profile, risk_score = get_client_portfolio(risk_score)
    tickers = get_tickers(port_profile)
    MC_length_days, MC_length_str = get_MC_length(investment_length)
 
@@ -62,10 +62,8 @@ def run():
    MC_client_summary = MC_list_client.summarize_cumulative_return()
 
 # create visuals
-   save_vis_daily_return_distribution_benchmark(daily_returns_df_benchmark)
    save_vis_cumulative_return_distribution_benchmark(cumulative_returns_df_benchmark)
-   save_45_day_rolling_volitility_benchmark(daily_returns_df_benchmark)   
-   save_vis_daily_return_distribution_client(daily_returns_client_portfolio_df)
+   save_45_day_rolling_volitility_benchmark(daily_returns_df_benchmark, daily_returns_client_portfolio_df)
    save_vis_cumulative_return_distribution_client(cumulative_returns_client_portfolio_df)
    save_45_day_rolling_volitility_client(daily_returns_client_portfolio_df)  
    save_vis_cumulative_return_benchmark_client(cumulative_returns_df_benchmark, cumulative_returns_client_portfolio_df) 
@@ -74,8 +72,9 @@ def run():
    pie_chart_client_portfolio(client_portfolio, tickers)
 
 # create the image and pdf from information above
+   create_MC_comparison_img(MC_benchmark_summary, MC_client_summary, investment_amount)
    create_info_img(full_name, phone_number, email_address, annual_income, income_stability, annual_expenses, investment_amount, investment_length, risk_level, investment_strategy)
-   create_pdf(full_name, MC_benchmark_summary, MC_client_summary)
+   create_pdf(full_name, port_profile, MC_length_str)
 
 # print exit message for the client and terminate the program
    exit_message(full_name)
