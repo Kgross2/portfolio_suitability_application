@@ -1,4 +1,4 @@
-## JACK Financial's Portffolio Suitability Application
+## JACK Financial's Portfolio Suitability Application
 
 One of the most powerful psychological pulls is the urge to reciprocate.  When a person receives a gift, even when it is unrequested or of limited value, the person feels a strong urge to return the favor.  Building on this idea, this Portfolio Suitability Application allows a user to answer a series of questions.  These questions create a customized portfolio plan, composed of multiple ETFs, based upon the potential client's risk tolerance and investing horizon.  Additionally, this report contains graphs and charts that can be the springboard to a demonstration of expertise by the financial advisor.  Most importantly, the application is simple to use.
 
@@ -43,34 +43,32 @@ Once you have launched the application, you will be welcomed with the following 
 
 After launch, the user will be asked a series of questions about their personal information, their financial information, and their investing experience and preferences.  
 
-![](./img/2.png)
+![](./img/CLI_questions.png)
 
-This data is in the Risk Score algorythm to determine the appropriate risk profile for the client.  This algorythm is located in /data/investment_scores.py.  
+This data is in the Risk Score algorithm to determine the appropriate risk profile for the client.  This algorithm is located in /data/investment_scores.py.  
 
 From the risk profile, a portfolio is created based upon the tradition allocation model published by RBC.
 
-![](./img/4.png)
+![](./img/RBC_model.png)
 
 The selected portfolio is then shown to the client through a variety of charts, graphs, and tables.
 ### Portfolio distribution pie chart
-![](./img/5.png)
+![](./img/pie_chart_client_portfolio.png)
 ### Cumulative Return Client v. S&P
-![](./img/6.png)
+![](./img/cumulative_return_benchmark_client.png)
 ### Client Volitility Comparison with Benchmarks
-![](./img/7.png)
+![](./img/45_day_vol_client.png)
 ### Client Composite Volitilty
-![](./img/8.png)
+![](./img/45_day_vol_benchmark.png)
 ### Monte Carlo Comparison Table
-![](./img/9.png)
+![](./img/MC_comparison.png)
 
 Each of the above images are saved for use in /img/.
 
 ## Output
 
 The above are contained in a PDF that is saved in /pdf/.
-![](./img/3.png)
-![](./img/11.png)
-![](./img/12.png)
+
 
 ## Directories
 
