@@ -38,11 +38,11 @@ def run():
    annual_income, annual_expenses, income_stability = financial_info()
    investing_experience, investment_amount, risk_level, investment_strategy, investment_length = investment_info()
 
-# fire risk and time score calculator
-   risk_score, time_score = score_calculator(investment_amount, annual_income, annual_expenses, investing_experience, income_stability, risk_level, investment_length, investment_strategy)
+# fire risk calculator
+   risk_score = score_calculator(investment_amount, annual_income, annual_expenses, investing_experience, income_stability, risk_level, investment_length, investment_strategy)
 
-# use risk and time score to select the clients portfolio profile, start date, and portfolio tickers 
-   client_portfolio, port_profile, risk_score = get_client_portfolio(risk_score, time_score)
+# use risk to select the clients portfolio profile, start date, and portfolio tickers 
+   client_portfolio, port_profile, risk_score = get_client_portfolio(risk_score)
    tickers = get_tickers(port_profile)
    MC_length_days, MC_length_str = get_MC_length(investment_length)
 

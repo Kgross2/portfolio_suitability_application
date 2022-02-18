@@ -8,13 +8,14 @@ from dateutil.relativedelta import relativedelta
 
 # Load env
 load_dotenv()
+# alpaca API information
 alpaca_api_key = os.getenv("ALPACA_API_KEY")
 alpaca_secret_key = os.getenv("ALPACA_SECRET_KEY")
 alpaca = tradeapi.REST(
     alpaca_api_key,
     alpaca_secret_key,
     api_version="v2")
-
+# defines the data for the Benchmarks that will be used for brochure
 def get_benchmark_data(alpaca):
     tickers = ["QQQ","SPY", "IEF", "DIA"]
     today = pd.Timestamp(date.today(), tz="America/New_York").isoformat()
@@ -30,7 +31,7 @@ def get_benchmark_data(alpaca):
     ).df
 
     return prices_df_benchmark
-
+# defines the data for the client portfolio that will be used in the brochure
 def get_client_portfolio_data(alpaca, tickers):
     today = pd.Timestamp(date.today(), tz="America/New_York").isoformat()
     three_yrs_ago=pd.Timestamp(datetime.now() - relativedelta(years=3),tz="America/New_York").isoformat()
@@ -53,7 +54,7 @@ def get_client_portfolio_data(alpaca, tickers):
     daily_returns_client_portfolio_df = closing_prices_client_portfolio_df.pct_change().dropna()
     cumulative_returns_client_portfolio_df = (1+daily_returns_client_portfolio_df).cumprod()-1
     return prices_df_client_portfolio, daily_returns_client_portfolio_df, cumulative_returns_client_portfolio_df, closing_prices_client_portfolio_df 
-
+# Assigns tickers to each of the portfolios 
 def get_tickers(port_profile):
     tickers = []
 
@@ -70,7 +71,7 @@ def get_tickers(port_profile):
     elif port_profile == "Profile 5":
         tickers = ["SPGP", "IJH", "VB", "VXUS", "VWO"]
     return tickers
-
+# Setting up data for the client brochure, as well as the MC simulation
 def get_client_data(alpaca, tickers, client_portfolio):
     tickers = tickers
     today = pd.Timestamp(date.today(), tz="America/New_York").isoformat()
@@ -101,23 +102,23 @@ def get_client_data(alpaca, tickers, client_portfolio):
         i += 1
 
     return prices_df_client, daily_returns_client, cumulative_returns_client_portfolio, closing_prices_client_portfolio_df
-
+# actual MC simulation for benchmark data 
 def get_MC_list_benchmark(prices_df_benchmark, MC_length_days):
    MC_list_benchmark =  MCSimulation(
         portfolio_data=prices_df_benchmark,
         weights=[0,0,0,1],
-        num_simulation=50,
+        num_simulation=500,
         num_trading_days=MC_length_days)
    return MC_list_benchmark
-
+ # actual MC simulation for client data
 def get_MC_list_client(prices_df_client, client_portfolio, MC_length_days):
    MC_list_client =  MCSimulation(
         portfolio_data=prices_df_client,
         weights=client_portfolio,
-        num_simulation=50,
+        num_simulation=500,
         num_trading_days=MC_length_days)
    return MC_list_client
-
+# closing price dataa used for client brochure
 def get_closing_prices_benchmark(daily_prices_df):
     closing_prices_benchmark = pd.DataFrame()
     closing_prices_benchmark["QQQ"] = daily_prices_df["QQQ"]["close"]
@@ -125,12 +126,12 @@ def get_closing_prices_benchmark(daily_prices_df):
     closing_prices_benchmark["IEF"] = daily_prices_df["IEF"]["close"]
     closing_prices_benchmark["DIA"] = daily_prices_df["DIA"]["close"]
     return closing_prices_benchmark
-
+# cumulative returns data used for brochure
 def get_cumulative_returns(daily_price_df):
     daily_returns=daily_price_df.pct_change().dropna()
     cumulative_returns = (1+daily_returns).cumprod()-1
     return cumulative_returns
-
+# daily returns data used for brochure
 def get_daily_returns(daily_price_df):
     daily_returns=daily_price_df.pct_change().dropna()
     return daily_returns
